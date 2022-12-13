@@ -14,12 +14,12 @@ void Renderer::render(sf::RenderWindow& window, World& world, Player& player, in
 			{
 				hgt = 0;
 				for (int h = 0; h < world.getHeight(); h++)
-					if (world.getTile(w, l, h) > 0)
+					if (world.getTile(w, l, h) > 0 && !world.getTileAttrib(w, l, h).isDecor)
 						hgt = h;
 				for (int h = 0; h < world.getHeight(); h++)
 				{
 					id = world.getTile(w, l, h);
-					if (hgt == h)
+					if (hgt == h || world.getTileAttrib(w, l, h).isDecor)
 					{
 						rect.setSize(sf::Vector2f(tileSize, tileSize));
 						rect.setTexture(&textures[id * 2.0 + 1]);

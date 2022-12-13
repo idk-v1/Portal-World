@@ -31,6 +31,10 @@ attrib Tile::getAttrib()
 	case 3:
 		att.dropID = 3;
 		break;
+	case 4:
+		att.isSolid = false;
+		att.isTransparent = false;
+		att.isDecor = true;
 	}
 	return att;
 }

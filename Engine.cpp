@@ -58,7 +58,22 @@ void Engine::start()
         {
             dt -= fps;
             for (int p = 0; p < players.size(); p++)
+            {
                 players[p].update(keyboard, worlds[activeWorld], tileSize);
+                if (worlds[activeWorld].getTile(
+                    players[p].getPosition().x / tileSize,
+                    players[p].getPosition().y / tileSize,
+                    players[p].getPosition().z) == 4 || 
+                    worlds[activeWorld].getTile(
+                    players[p].getPosition().x / tileSize,
+                    players[p].getPosition().y / tileSize,
+                    players[p].getPosition().z + 1) == 4)
+                {
+                    worlds.push_back(World(100, 50, 7, rand()));
+                    activeWorld = worlds.size() - 1;
+                    players[p] = Player(5 * tileSize, 5 * tileSize, 5);
+                }
+            }
         }
 
         window.clear();

@@ -18,6 +18,9 @@ private:
 		"SandSide.png",
 		"SandTop.png",
 
+		"PortalSide.png",
+		"PortalTop.png",
+
 		"PlayerSide.png",
 		"PlayerTop.png"
 	};

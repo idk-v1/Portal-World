@@ -1,4 +1,5 @@
 #include "World.h"
+#include <iostream>
 
 
 World::World(int width, int length, int height, int seed)
@@ -7,6 +8,8 @@ World::World(int width, int length, int height, int seed)
 	std::vector<std::vector<Tile>> vvt;
 	std::vector<Tile> vt;
 	Tile t;
+
+	portalLoc = std::hash<int>{}(seed) % width;
 
 	noise.setSeed(seed);
 
@@ -28,8 +31,8 @@ World::World(int width, int length, int height, int seed)
 	for (int w = 0; w < width; w++)
 		for (int l = 0; l < length; l++)
 		{
-			hgt = std::floor(pow(noise.unsignedFBM(w * 0.05, l * 0.05, 5, 0.5, 0.15) * (height - 1.0), 3) / (height - 1.0) + 0.75) / (height - 1.0);
-			for (int h = 0; h < hgt; h++)
+			hgt = std::floor(pow(noise.unsignedFBM(w * 0.025, l * 0.025, 2, 0.1, 0.15) * (height - 1.0), 3) / (height - 1.0) + 0.75) / (height - 1.0);
+			for (int h = 0; h < hgt - 1; h++)
 			{
 				setTile(w, l, h, 2);
 			}
@@ -43,13 +46,20 @@ World::World(int width, int length, int height, int seed)
 				if (getTile(w, l, 0) == 2)
 					setTile(w, l, 0, 3);
 		}
+
+	hgt = 1;
+	for (int h = 0; h < height; h++)
+		if (getTile(portalLoc, 0, h) != 0)
+			hgt = h + 1;
+	setTile(portalLoc, 0, hgt, 4);
+	std::cout << "Portal is at: X: " << portalLoc << '\n';
 }
 
 attrib World::getTileAttrib(int x, int y, int z)
 {
 	if (x >= 0 && x < width && y >= 0 && y < length && z >= 0 && z < height)
 		return tiles[x][y][z].getAttrib();
-	return { -1, -1, -1, -1, false, true };
+	return { -1, -1, -1, -1, false, true, false };
 }
 
 int World::getWidth()

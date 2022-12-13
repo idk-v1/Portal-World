@@ -16,7 +16,7 @@ public:
 	int getHeight();
 private:
 	std::vector<std::vector<std::vector<Tile>>> tiles;
-	int width, length, height;
+	int width, length, height, portalLoc;
 	SimplexNoise noise;
 };
 

@@ -3,7 +3,7 @@
 struct attrib
 {
 	int frict = 2, damage = 0, light = 0, dropID = 0;
-	bool isSolid = true, isTransparent = false;
+	bool isSolid = true, isTransparent = false, isDecor = false;
 };
 
 class Tile
