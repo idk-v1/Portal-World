@@ -3,5 +3,8 @@
 
 ##### SFML is required
 
+### 0.0.2
+Added portals. Not very fun. It's like going on a treasure hunt for your reload button.
+
 ### 0.0.1
 Base game engine. Movement and colors. No portals yet.
