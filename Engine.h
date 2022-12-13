@@ -5,6 +5,8 @@
 #include "World.h"
 #include "Render.h"
 #include "Player.h"
+#include"Keyboard.h"
+#include "Texture.h"
 
 
 class Engine
@@ -13,15 +15,15 @@ public:
 	Engine(int, int);
 	void start();
 private:
-	void getKeys(sf::Event, bool);
-
 	sf::RenderWindow window;
 	bool focus = true;
-	bool wk = false, ak = false, sk = false, dk = false;
 	long now = 0, last = 0, ticks = 0, dt = 0;
 	int tileSize = 64, fps = 1000 / 60, activeWorld = 0, renderDist;
 	std::vector<World>worlds;
 	Renderer render;
 	std::vector<Player>players;
+	Keyboard keyboard;
+	std::vector<sf::Texture>textures;
+	TexManager texManager;
 };
 

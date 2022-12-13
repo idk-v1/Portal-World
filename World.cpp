@@ -3,9 +3,9 @@
 
 World::World(int width, int length, int height)
 {
-	std::vector<std::vector<char>> vvt;
-	std::vector<char> vt;
-	char t;
+	std::vector<std::vector<Tile>> vvt;
+	std::vector<Tile> vt;
+	Tile t;
 
 	this->width = width;
 	this->length = length;
@@ -25,13 +25,21 @@ World::World(int width, int length, int height)
 	for (int w = 0; w < width; w++)
 		for (int l = 0; l < length; l++)
 		{
-			setTile(w, l, 0, 1);
 			int hgt = std::floor(pow(noise.unsignedFBM(w * 0.05, l * 0.05, 5, 0.5, 0.15) * (height - 1.0), 3) / (height - 1.0) + 0.75) / (height - 1.0);
-			for (int h = 0; h <= hgt; h++)
+			for (int h = 0; h < hgt; h++)
 			{
 				setTile(w, l, h, 2);
 			}
+			if (getTile(w, l, 0) == 0)
+				setTile(w, l, 0, 1);
 		}
+}
+
+attrib World::getTileAttrib(int x, int y, int z)
+{
+	if (x >= 0 && x < width && y >= 0 && y < length && z >= 0 && z < height)
+		return tiles[x][y][z].getAttrib();
+	return { 0, 0, 0, 0, 0, 0 };
 }
 
 int World::getWidth()
@@ -52,12 +60,12 @@ int World::getHeight()
 char World::getTile(int x, int y, int z)
 {
 	if (x >= 0 && x < width && y >= 0 && y < length && z >= 0 && z < height)
-		return  tiles[x][y][z];
+		return  tiles[x][y][z].getID();
 	return -1;
 }
 
 void World::setTile(int x, int y, int z, int id)
 {
 	if (x >= 0 && x < width && y >= 0 && y < length && z >= 0 && z < height)
-		tiles[x][y][z] = id;
+		tiles[x][y][z].setID(id);
 }
