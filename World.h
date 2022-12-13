@@ -6,9 +6,9 @@
 class World
 {
 public:
-	World(int, int, int);
+	World(int, int, int, int);
 
-	char getTile(int, int, int);
+	int getTile(int, int, int);
 	void setTile(int, int, int, int);
 	attrib getTileAttrib(int, int, int);
 	int getWidth();

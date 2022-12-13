@@ -2,16 +2,16 @@
 
 struct attrib
 {
-	char frict = 3, damage = 0, light = 0, dropID = 0;
+	int frict = 2, damage = 0, light = 0, dropID = 0;
 	bool isSolid = true, isTransparent = false;
 };
 
 class Tile
 {
 public:
-	void setID(char);
-	char getID();
+	void setID(int);
+	int getID();
 	attrib getAttrib();
 private:
-	char id = 0;
+	int id = 0, biome;
 };

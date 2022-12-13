@@ -3,6 +3,6 @@
 
 int main()
 {
-	Engine engine(1280, 720);
+	Engine engine(640, 480);
 	engine.start();
 }

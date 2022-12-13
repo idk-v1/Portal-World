@@ -8,7 +8,7 @@
 class Renderer
 {
 public:
-	void render(sf::RenderWindow&, World&, Player&, int, std::vector<sf::Texture>&);
+	void render(sf::RenderWindow&, World&, Player&, int, int, std::vector<sf::Texture>&);
 private:
 	sf::RectangleShape rect;
 };

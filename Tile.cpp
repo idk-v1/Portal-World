@@ -1,11 +1,11 @@
 #include "Tile.h"
 
-void Tile::setID(char tileID)
+void Tile::setID(int tileID)
 {
 	id = tileID;
 }
 
-char Tile::getID()
+int Tile::getID()
 {
 	return id;
 }
@@ -21,12 +21,16 @@ attrib Tile::getAttrib()
 		att.isTransparent = true;
 		break;
 	case 1:
-		att.frict = 5;
+		att.frict = 7;
 		att.isSolid = false;
 		att.isTransparent = true;
 		break;
 	case 2:
 		att.dropID = 2;
+		break;
+	case 3:
+		att.dropID = 3;
+		break;
 	}
 	return att;
 }

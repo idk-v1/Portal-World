@@ -16,73 +16,81 @@ sf::Vector3f Player::getPosition()
 
 void Player::update(Keyboard& keyboard, World &world, int tileSize)
 {
-    velx += (double(keyboard.dk) - double(keyboard.ak)) * 0.0025 * tileSize;
-    vely += (double(keyboard.sk) - double(keyboard.wk)) * 0.0025 * tileSize;
+    int max;
+    max = std::max(getFriction(-1, -1, posz - 1, tileSize, world), getFriction(1, -1, posz - 1, tileSize, world));
+    max = std::max(getFriction( 1,  1, posz - 1, tileSize, world), max);
+    max = std::max(getFriction(-1,  1, posz - 1, tileSize, world), max);
+    max = std::max(getFriction( 0,  0, posz, tileSize, world), max);
+    double frict = 1 + 0.1 * max;
 
-    if (velx >= maxSpeed) velx = maxSpeed;
-    if (velx <= -maxSpeed) velx = -maxSpeed;
-    if (vely >= maxSpeed) vely = maxSpeed;
-    if (vely <= -maxSpeed) vely = -maxSpeed;
+    velx += (double(keyboard.dk) - double(keyboard.ak)) * 0.025 * tileSize;
+    vely += (double(keyboard.sk) - double(keyboard.wk)) * 0.025 * tileSize;
 
-    // Move Down
+    velx /= frict;
+    vely /= frict;
+
+    // DOWN
     if (!isColliding(-1, -1, posz - 1, 0, 0, tileSize, world) &&
-        !isColliding(1, -1, posz - 1, 0, 0, tileSize, world) &&
-        !isColliding(1, 1, posz - 1, 0, 0, tileSize, world) &&
-        !isColliding(-1, 1, posz - 1, 0, 0, tileSize, world) &&
+        !isColliding( 1, -1, posz - 1, 0, 0, tileSize, world) &&
+        !isColliding( 1,  1, posz - 1, 0, 0, tileSize, world) &&
+        !isColliding(-1,  1, posz - 1, 0, 0, tileSize, world) &&
         posz > 0)
-    {
-        std::cout << "Down: " << posz << "\n";
         posz--;
-    }
 
-    // Move Up
+    // UP
     if (isColliding(-1, -1, posz, 0, 0, tileSize, world) ||
-        isColliding(1, -1, posz, 0, 0, tileSize, world) ||
-        isColliding(1, 1, posz, 0, 0, tileSize, world) ||
-        isColliding(-1, 1, posz, 0, 0, tileSize, world))
-    {
-        std::cout << "Up: " << posz << "\n";
+        isColliding( 1, -1, posz, 0, 0, tileSize, world) ||
+        isColliding( 1,  1, posz, 0, 0, tileSize, world) ||
+        isColliding(-1,  1, posz, 0, 0, tileSize, world))
         posz++;
-    }
 
-    velx /= double(10 + world.getTileAttrib(posz, posx / tileSize, posy / tileSize).frict) / 9.5;
-    vely /= double(10 + world.getTileAttrib(posz, posx / tileSize, posy / tileSize).frict) / 9.5;
-
-    // Move Right
+    // RIGHT
     if (velx > 0)
-        for (int i = 0; i < std::abs(velx) / step; i++)
-            if (!isColliding(1,  1, posz + 1, step, 0, tileSize, world) &&
-                !isColliding(1, -1, posz + 1, step, 0, tileSize, world))
+        for (int i = 0; i < std::abs(velx) * 10; i++)
+            if (!isColliding( 1, -1, posz + 1,  step, 0, tileSize, world) &&
+                !isColliding( 1,  1, posz + 1,  step, 0, tileSize, world))
                 posx += step;
             else
+            {
                 velx = 0;
+                posx -= step;
+            }
 
-    // Move Left
+    // LEFT
     if (velx < 0)
-        for (int i = 0; i < std::abs(velx) / step; i++)
-            if (!isColliding(-1,  1, posz + 1, -step, 0, tileSize, world) &&
-                !isColliding(-1, -1, posz + 1, -step, 0, tileSize, world))
+        for (int i = 0; i < std::abs(velx) * 10; i++)
+            if (!isColliding( -1, -1, posz + 1, -step, 0, tileSize, world) &&
+                !isColliding( -1,  1, posz + 1, -step, 0, tileSize, world))
                 posx -= step;
             else
+            {
                 velx = 0;
+                posx += step;
+            }
 
-    //// BOTTOM
-    //if (vely > 0)
-    //    for (int i = 0; i < std::abs(vely) * 100; i++)
-    //        if (isTileMovable(posh + 1, (posx - playWidth / 2 * tileSize) / tileSize, (posy + playWidth / 2 * tileSize + step) / tileSize) &&
-    //            isTileMovable(posh + 1, (posx + playWidth / 2 * tileSize) / tileSize, (posy + playWidth / 2 * tileSize + step) / tileSize))
-    //            posy += step;
-    //        else
-    //            vely = 0;
+    // BOTTOM
+    if (vely > 0)
+        for (int i = 0; i < std::abs(vely) * 10; i++)
+            if (!isColliding(-1,  1, posz + 1, 0,  step, tileSize, world) &&
+                !isColliding( 1,  1, posz + 1, 0,  step, tileSize, world))
+                posy += step;
+            else
+            {
+                vely = 0;
+                posy -= step;
+            }
 
-    //// TOP
-    //if (vely < 0)
-    //    for (int i = 0; i < std::abs(vely) * 100; i++)
-    //        if (isTileMovable(posh + 1, (posx - playWidth / 2 * tileSize) / tileSize, (posy - playWidth / 2 * tileSize - step) / tileSize) &&
-    //            isTileMovable(posh + 1, (posx + playWidth / 2 * tileSize) / tileSize, (posy - playWidth / 2 * tileSize - step) / tileSize))
-    //            posy -= step;
-    //        else
-    //            vely = 0;
+    // TOP
+    if (vely < 0)
+        for (int i = 0; i < std::abs(vely) * 10; i++)
+            if (!isColliding(-1, -1, posz + 1, 0, -step, tileSize, world) &&
+                !isColliding( 1, -1, posz + 1, 0, -step, tileSize, world))
+                posy -= step;
+            else
+            {
+                vely = 0;
+                posy += step;
+            }
 
     if (std::abs(velx) < 0.01) velx = 0;
     if (std::abs(vely) < 0.01) vely = 0;
@@ -104,5 +112,12 @@ double Player::getWidth()
 
 bool Player::isColliding(int dirx, int diry, int z, int offx, int offy, int tileSize, World &world)
 {
-    return world.getTileAttrib(z, (posx + dirx * width / 2 * tileSize - offx) / tileSize, (posy + diry * width / 2 * tileSize - offy) / tileSize).isSolid;
+    return world.getTileAttrib((posx + dirx * width / 2 * tileSize + offx) / tileSize, 
+        (posy + diry * width / 2 * tileSize + offy) / tileSize, z).isSolid;
+}
+
+int Player::getFriction(int dirx, int diry, int z, int tileSize, World &world)
+{
+    return world.getTileAttrib((posx + dirx * width / 2 * tileSize) / tileSize,
+        (posy + diry * width / 2 * tileSize) / tileSize, z).frict;
 }

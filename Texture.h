@@ -15,6 +15,9 @@ private:
 		"GrassSide.png",
 		"GrassTop.png",
 
+		"SandSide.png",
+		"SandTop.png",
+
 		"PlayerSide.png",
 		"PlayerTop.png"
 	};

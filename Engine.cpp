@@ -6,6 +6,8 @@ Engine::Engine(int width, int height)
 {
     window.create(sf::VideoMode(width, height), "Tiles");
     window.setFramerateLimit(60);
+
+    srand(time(NULL));
 }
 
 void Engine::start()
@@ -14,8 +16,8 @@ void Engine::start()
 
     texManager.load(textures);
 
-    worlds.push_back(World(250, 50, 7));
-    players.push_back(Player(25 * tileSize, 25 * tileSize, 7));
+    worlds.push_back(World(250, 50, 10, rand()));
+    players.push_back(Player(5 * tileSize, 5 * tileSize, 10));
 
     while (window.isOpen())
     {
@@ -57,12 +59,11 @@ void Engine::start()
             dt -= fps;
             for (int p = 0; p < players.size(); p++)
                 players[p].update(keyboard, worlds[activeWorld], tileSize);
-            //move();
         }
 
         window.clear();
         for (int p = 0; p < players.size(); p++)
-            render.render(window, worlds[activeWorld], players[p], tileSize, textures);
+            render.render(window, worlds[activeWorld], players[p], tileSize, renderDist, textures);
         window.display();
     }
 }

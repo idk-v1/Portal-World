@@ -16,8 +16,9 @@ public:
 	double getWidth();
 private:
 	bool isColliding(int, int, int, int, int, int, World&);
+	int getFriction(int, int, int, int, World&);
 
-	double posx, posy, posz, width = 0.8;
-	double velx = 0, vely = 0, maxSpeed = 10, step = 0.01;
+	double posx, posy, posz, width = 0.6;
+	double velx = 0, vely = 0, maxSpeed = 2, step = 0.1;
 };
 
