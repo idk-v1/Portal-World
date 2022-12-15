@@ -3,6 +3,9 @@
 
 ##### SFML is required
 
+### 0.0.3
+Added new world types and better portals. World types: Islands, Hills, and Random. Random is not very fun.
+
 ### 0.0.2
 Added portals. Not very fun. It's like going on a treasure hunt for your reload button.
 
