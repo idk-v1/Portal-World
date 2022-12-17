@@ -3,6 +3,9 @@
 
 ##### SFML is required
 
+### 0.0.4
+Added animated textures which don't look good. Added a block attribute file.
+
 ### 0.0.3
 Added new world types and better portals. World types: Islands, Hills, and Random. Random is not very fun.
 
