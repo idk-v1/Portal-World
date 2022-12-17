@@ -1,0 +1,141 @@
+{
+    name: "air"
+    id: 0
+    drop: -1
+    frict: 0
+    light: 0
+    frames: 1
+    invisible: 1
+    transparent: 1
+    decor: 0
+    solid: 0
+    liquid: 0
+    breakable: 0
+}
+{
+    name: "water"
+    id: 1
+    drop: -1
+    frict: 6
+    light: 0
+    frames: 8
+    invisible: 0
+    transparent: 1
+    decor: 0
+    solid: 0
+    liquid: 1
+    breakable: 0
+}
+{
+    name: "grass"
+    id: 2
+    drop: 3
+    frict: 2
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+{
+    name: "dirt"
+    id: 3
+    drop: 3
+    frict: 2
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+
+{
+    name: "sand"
+    id: 4
+    drop: 4
+    frict: 2
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+{
+    name: "portal"
+    id: 5
+    drop: -1
+    frict: 5
+    light: 5
+    frames: 8
+    invisible: 0
+    transparent: 1
+    decor: 1
+    solid: 0
+    liquid: 0
+    breakable: 0
+}
+{
+    name: "stone"
+    id: 6
+    drop: 8
+    frict: 2
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+{
+    name: "sand-stone"
+    id: 7
+    drop: 4
+    frict: 2
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+{
+    name: "gravel"
+    id: 8
+    drop: 8
+    frict: 1
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 0
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
+{
+    name: "ice"
+    id: 9
+    drop: -1
+    frict: 0
+    light: 0
+    frames: 1
+    invisible: 0
+    transparent: 1
+    decor: 0
+    solid: 1
+    liquid: 0
+    breakable: 1
+}
