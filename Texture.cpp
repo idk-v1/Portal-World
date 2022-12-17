@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-void TexManager::load(std::vector<sf::Texture>&tex)
+void TexManager::load(std::vector<sf::Texture>&tex, TileAttrib &tileAtt)
 {
     const unsigned int numPixels = 32 * 32;
     sf::Uint8 pixels[4 * numPixels];
@@ -35,7 +35,9 @@ void TexManager::load(std::vector<sf::Texture>&tex)
 	for (int i = 0; i < textures.size(); i++)
 	{
 		sf::Texture texture;
-        if (!texture.loadFromFile("textures/" + textures[i]))
+        if (textures[i] == "NONE")
+            texture = clearTex;
+        else if (!texture.loadFromFile("Portal_World/textures/" + textures[i]))
             texture = missingTex;
 		tex.push_back(texture);
 	}

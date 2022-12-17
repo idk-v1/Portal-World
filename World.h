@@ -6,17 +6,23 @@
 class World
 {
 public:
-	World(int, int, int, int);
+	World(int seed, int id, bool isDef, int portalLocT, int portalLocB);
 
-	int getTile(int, int, int);
-	void setTile(int, int, int, int);
-	attrib getTileAttrib(int, int, int);
+	int getTile(int x, int y, int z);
+	void setTile(int x, int y, int z, int id);
 	int getWidth();
 	int getLength();
 	int getHeight();
+	int getID();
+	void genPortal();
 private:
+	void genDefault();
+	void genIslands();
+	void genHills();
+	void genRand();
+
 	std::vector<std::vector<std::vector<Tile>>> tiles;
-	int width, length, height, portalLoc;
+	int width, length, height, id, seed, portalLocT, portalLocB;
 	SimplexNoise noise;
 };
 

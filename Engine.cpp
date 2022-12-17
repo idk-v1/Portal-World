@@ -12,12 +12,15 @@ Engine::Engine(int width, int height)
 
 void Engine::start()
 {
+    int otherWorld;
+
     renderDist = std::max(window.getSize().x / tileSize / 2, window.getSize().y / tileSize / 2) + 1;
 
-    texManager.load(textures);
+    tileAtt.load("Portal_World/attrib/tileAttrib");
+    texManager.load(textures, tileAtt);
 
-    worlds.push_back(World(250, 50, 10, rand()));
-    players.push_back(Player(5 * tileSize, 5 * tileSize, 10));
+    worlds.push_back(World(rand(), 1, true, 125, 125));
+    player.setPosition(125 * tileSize, 25 * tileSize, 10);
 
     while (window.isOpen())
     {
@@ -57,28 +60,59 @@ void Engine::start()
         while (dt >= fps)
         {
             dt -= fps;
-            for (int p = 0; p < players.size(); p++)
+            ticks++;
+            player.update(keyboard, worlds[activeWorld], tileSize, tileAtt);
+            if (player.portalCD == 0)
             {
-                players[p].update(keyboard, worlds[activeWorld], tileSize);
-                if (worlds[activeWorld].getTile(
-                    players[p].getPosition().x / tileSize,
-                    players[p].getPosition().y / tileSize,
-                    players[p].getPosition().z) == 4 || 
-                    worlds[activeWorld].getTile(
-                    players[p].getPosition().x / tileSize,
-                    players[p].getPosition().y / tileSize,
-                    players[p].getPosition().z + 1) == 4)
+                if (player.isInPortal(tileSize) == -1)
                 {
-                    worlds.push_back(World(100, 50, 7, rand()));
-                    activeWorld = worlds.size() - 1;
-                    players[p] = Player(5 * tileSize, 5 * tileSize, 5);
+                    otherWorld = getWorldID(worlds[activeWorld].getID() - 1);
+                    if (otherWorld != -1)
+                    {
+                        activeWorld = otherWorld;
+                        player.setPosition(player.getPosition().x - tileSize, 1000 * tileSize, 10);
+                        std::cout << "Load World: ";
+                    }
+                    else
+                    {
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() - 1, false, -1, player.getPosition().x / tileSize));
+                        activeWorld = worlds.size() - 1;
+                        player.setPosition(player.getPosition().x - tileSize, 1000 * tileSize, 10);
+                        std::cout << "New World: ";
+                    }
+                    std::cout << worlds[activeWorld].getID() << "\n";
+                }
+                else if (player.isInPortal(tileSize) == 1)
+                {
+                    otherWorld = getWorldID(worlds[activeWorld].getID() + 1);
+                    if (otherWorld != -1)
+                    {
+                        activeWorld = otherWorld;
+                        player.setPosition(player.getPosition().x - tileSize, 0, 10);
+                        std::cout << "Load World: ";
+                    }
+                    else
+                    {
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() + 1, false, player.getPosition().x / tileSize, -1));
+                        activeWorld = worlds.size() - 1;
+                        player.setPosition(player.getPosition().x - tileSize, 0, 10);
+                        std::cout << "New World: ";
+                    }
+                    std::cout << worlds[activeWorld].getID() << "\n";
                 }
             }
         }
 
         window.clear();
-        for (int p = 0; p < players.size(); p++)
-            render.render(window, worlds[activeWorld], players[p], tileSize, renderDist, textures);
+        render.render(window, worlds[activeWorld], player, tileSize, renderDist, textures, tileAtt, ticks);
         window.display();
     }
+}
+
+int Engine::getWorldID(int id)
+{
+    for (int i = 0; i < worlds.size(); i++)
+        if (id == worlds[i].getID())
+            return i;
+    return -1;
 }

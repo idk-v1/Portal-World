@@ -1,27 +1,31 @@
 #pragma once
 #include "SFML.h"
+#include "TileAttrib.h"
 #include <vector>
 
 class TexManager
 {
 public:
-	void load(std::vector<sf::Texture>&);
+	void load(std::vector<sf::Texture>&, TileAttrib&);
 private:
 	std::vector<std::string>textures = 
 	{
-		"WaterSide.png",
-		"WaterTop.png",
+		"waterSideAn.png",
+		"waterTopAn2.png",
 
-		"GrassSide.png",
-		"GrassTop.png",
+		"grassSideAn.png",
+		"grassTopAn.png",
 
-		"SandSide.png",
-		"SandTop.png",
+		"dirtSide.png",
+		"dirtTop.png",
 
-		"PortalSide.png",
-		"PortalTop.png",
+		"sandSide.png",
+		"sandTop.png",
 
-		"PlayerSide.png",
-		"PlayerTop.png"
+		"NONE",
+		"portalTop.png",
+
+		"NONE",
+		"NONE"
 	};
 };
