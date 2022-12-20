@@ -3,6 +3,9 @@
 
 ##### SFML is required
 
+### 0.0.5
+Added basic decorations to worlds and random world materials. Textures look better.
+
 ### 0.0.4
 Added animated textures which don't look good. Added a block attribute file.
 
