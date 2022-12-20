@@ -45,10 +45,14 @@ void TileAttrib::load(std::string name)
 						att.transparent = stoi(value);
 					if (key == "decor")
 						att.decor = stoi(value);
+					if (key == "side")
+						att.side = stoi(value);
 					if (key == "solid")
 						att.solid = stoi(value);
 					if (key == "liquid")
 						att.liquid = stoi(value);
+					if (key == "replacable")
+						att.replacable = stoi(value);
 					if (key == "breakable")
 						att.breakable = stoi(value);
 				}

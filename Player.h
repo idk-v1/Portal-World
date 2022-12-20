@@ -22,6 +22,7 @@ private:
 
 	int inBlock = -1, onBlock = -1, unBlock = -1;
 	double posx = 0, posy = 0, posz = 0, width = 0.6;
+	double posxOld = 0, posyOld = 0, poszOld = 0;
 	double velx = 0, vely = 0, maxSpeed = 2, step = 0.1;
 };
 

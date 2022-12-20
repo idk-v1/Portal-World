@@ -9,7 +9,7 @@ struct attribute
 {
 	std::string name = "ERR";
 	int id = -1, drop = -1, frict = 0, light = 0;
-	bool invisible = true, transparent = true, decor = false, solid = false, liquid = false, breakable = false;
+	bool invisible = true, transparent = true, decor = false, side = false, solid = false, liquid = false, replacable = false, breakable = false;
 };
 
 

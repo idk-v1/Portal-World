@@ -1,20 +1,22 @@
 #include "Keyboard.h"
 
-void Keyboard::getKeys(int codep, bool isDownp)
+void Keyboard::getKeys(int code, bool isDown)
 {
-	switch (codep)
+	switch (code)
 	{
-	case 22:
-		wk = isDownp;
+	case w:
+		wk = isDown;
 		break;
-	case 0:
-		ak = isDownp;
+	case a:
+		ak = isDown;
 		break;
-	case 18:
-		sk = isDownp;
+	case s:
+		sk = isDown;
 		break;
-	case 3:
-		dk = isDownp;
+	case d:
+		dk = isDown;
 		break;
+	case e:
+		ek = isDown;
 	}
 }

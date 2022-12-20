@@ -19,7 +19,7 @@ void Engine::start()
     tileAtt.load("Portal_World/attrib/tileAttrib");
     texManager.load(textures, tileAtt);
 
-    worlds.push_back(World(rand(), 1, true, 125, 125));
+    worlds.push_back(World(rand(), 1, true, 125, 125, tileAtt));
     player.setPosition(125 * tileSize, 25 * tileSize, 10);
 
     while (window.isOpen())
@@ -75,7 +75,7 @@ void Engine::start()
                     }
                     else
                     {
-                        worlds.push_back(World(rand(), worlds[activeWorld].getID() - 1, false, -1, player.getPosition().x / tileSize));
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() - 1, false, -1, player.getPosition().x / tileSize, tileAtt));
                         activeWorld = worlds.size() - 1;
                         player.setPosition(player.getPosition().x - tileSize, 1000 * tileSize, 10);
                         std::cout << "New World: ";
@@ -93,7 +93,7 @@ void Engine::start()
                     }
                     else
                     {
-                        worlds.push_back(World(rand(), worlds[activeWorld].getID() + 1, false, player.getPosition().x / tileSize, -1));
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() + 1, false, player.getPosition().x / tileSize, -1, tileAtt));
                         activeWorld = worlds.size() - 1;
                         player.setPosition(player.getPosition().x - tileSize, 0, 10);
                         std::cout << "New World: ";

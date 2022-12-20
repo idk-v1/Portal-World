@@ -23,13 +23,28 @@ void Player::update(Keyboard& keyboard, World &world, int tileSize, TileAttrib &
     max = std::max(getFriction( 1,  1, posz - 1, tileSize, world, tileAtt), max);
     max = std::max(getFriction(-1,  1, posz - 1, tileSize, world, tileAtt), max);
     max = std::max(getFriction( 0,  0, posz, tileSize, world, tileAtt), max);
-    double frict = 1 + 0.1 * max;
+    double frict = 1 + 0.05 * max;
 
     velx += (double(keyboard.dk) - double(keyboard.ak)) * 0.025 * tileSize;
     vely += (double(keyboard.sk) - double(keyboard.wk)) * 0.025 * tileSize;
 
     velx /= frict;
     vely /= frict;
+
+    if (posz > poszOld)
+    {
+        velx *= 0.1;
+        vely *= 0.1;
+    }
+    if (posz < poszOld)
+    {
+        velx *= 1.1;
+        vely *= 1.1;
+    }
+
+    posxOld = posx;
+    posyOld = posy;
+    poszOld = posz;
 
     // DOWN
     if (!isColliding(-1, -1, posz - 1, 0, 0, tileSize, world, tileAtt) &&

@@ -13,8 +13,8 @@ private:
 		"waterSideAn.png",
 		"waterTopAn2.png",
 
-		"grassSideAn.png",
-		"grassTopAn.png",
+		"dirtSide.png",
+		"grassTop.png",
 
 		"dirtSide.png",
 		"dirtTop.png",
@@ -24,6 +24,15 @@ private:
 
 		"NONE",
 		"portalTop.png",
+
+		"stoneSide.png",
+		"stoneTop.png",
+
+		"iceSide.png",
+		"iceTop.png",
+
+		"treeSide.png",
+		"treeTop.png",
 
 		"NONE",
 		"NONE"
