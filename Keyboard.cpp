@@ -20,3 +20,15 @@ void Keyboard::getKeys(int code, bool isDown)
 		ek = isDown;
 	}
 }
+
+void Keyboard::getClick(int code, bool isDown)
+{
+	switch (code)
+	{
+	case l:
+		lc = isDown;
+		break;
+	case r:
+		rc = isDown;
+	}
+}

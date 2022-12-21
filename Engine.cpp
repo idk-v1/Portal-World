@@ -18,8 +18,11 @@ void Engine::start()
 
     tileAtt.load("Portal_World/attrib/tileAttrib");
     texManager.load(textures, tileAtt);
+    structs.push_back(Structure("test.png"));
+    structs.push_back(Structure("house.png"));
+    structs.push_back(Structure("portal.png"));
 
-    worlds.push_back(World(rand(), 1, true, 125, 125, tileAtt));
+    worlds.push_back(World(rand(), 1, true, 125, 125, tileAtt, structs));
     player.setPosition(125 * tileSize, 25 * tileSize, 10);
 
     while (window.isOpen())
@@ -46,6 +49,14 @@ void Engine::start()
                 if (focus)
                     keyboard.getKeys(event.key.code, false);
                 break;
+            case sf::Event::MouseButtonPressed:
+                if (focus)
+                    keyboard.getClick(event.mouseButton.button, true);
+                break;
+            case sf::Event::MouseButtonReleased:
+                if (focus)
+                    keyboard.getClick(event.mouseButton.button, false);
+                break;
             case sf::Event::Resized:
                 sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
@@ -70,14 +81,14 @@ void Engine::start()
                     if (otherWorld != -1)
                     {
                         activeWorld = otherWorld;
-                        player.setPosition(player.getPosition().x - tileSize, 1000 * tileSize, 10);
+                        player.setPosition(player.getPosition().x, (worlds[activeWorld].getLength() - 1) * tileSize - tileSize * 2, 10);
                         std::cout << "Load World: ";
                     }
                     else
                     {
-                        worlds.push_back(World(rand(), worlds[activeWorld].getID() - 1, false, -1, player.getPosition().x / tileSize, tileAtt));
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() - 1, false, -1, player.getPosition().x / tileSize, tileAtt, structs));
                         activeWorld = worlds.size() - 1;
-                        player.setPosition(player.getPosition().x - tileSize, 1000 * tileSize, 10);
+                        player.setPosition(player.getPosition().x, (worlds[activeWorld].getLength() - 1) * tileSize - tileSize * 2, 10);
                         std::cout << "New World: ";
                     }
                     std::cout << worlds[activeWorld].getID() << "\n";
@@ -88,14 +99,14 @@ void Engine::start()
                     if (otherWorld != -1)
                     {
                         activeWorld = otherWorld;
-                        player.setPosition(player.getPosition().x - tileSize, 0, 10);
+                        player.setPosition(player.getPosition().x, tileSize * 2, 10);
                         std::cout << "Load World: ";
                     }
                     else
                     {
-                        worlds.push_back(World(rand(), worlds[activeWorld].getID() + 1, false, player.getPosition().x / tileSize, -1, tileAtt));
+                        worlds.push_back(World(rand(), worlds[activeWorld].getID() + 1, false, player.getPosition().x / tileSize, -1, tileAtt, structs));
                         activeWorld = worlds.size() - 1;
-                        player.setPosition(player.getPosition().x - tileSize, 0, 10);
+                        player.setPosition(player.getPosition().x, tileSize * 2, 10);
                         std::cout << "New World: ";
                     }
                     std::cout << worlds[activeWorld].getID() << "\n";

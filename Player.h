@@ -17,6 +17,7 @@ public:
 
 	int portalCD = 0;
 private:
+	void destroy(int, int, int, World&, TileAttrib&);
 	bool isColliding(int, int, int, int, int, int, World&, TileAttrib&);
 	int getFriction(int, int, int, int, World&, TileAttrib&);
 

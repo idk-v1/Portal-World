@@ -34,6 +34,9 @@ private:
 		"treeSide.png",
 		"treeTop.png",
 
+		"bricksSide.png",
+		"bricksTop.png",
+
 		"NONE",
 		"NONE"
 	};

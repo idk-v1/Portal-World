@@ -135,6 +135,13 @@ double Player::getWidth()
     return width;
 }
 
+void Player::destroy(int x, int y, int z, World &world, TileAttrib &att)
+{
+    if (x >= 0 && x < 16 && y >= 0 && y < 16 && z >= 0 && z < 3)
+        if (att.getAttrib(world.getTile(x, y, z)).breakable)
+            world.setTile(x, y, z, 0);
+}
+
 bool Player::isColliding(int dirx, int diry, int z, int offx, int offy, int tileSize, World &world, TileAttrib &tileAtt)
 {
     return tileAtt.getAttrib(world.getTile((posx + dirx * width / 2 * tileSize + offx) / tileSize,

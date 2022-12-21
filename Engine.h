@@ -5,9 +5,10 @@
 #include "World.h"
 #include "Render.h"
 #include "Player.h"
-#include"Keyboard.h"
+#include "Keyboard.h"
 #include "Texture.h"
 #include "TileAttrib.h"
+#include "Structure.h"
 
 
 class Engine
@@ -29,5 +30,8 @@ private:
 	Keyboard keyboard;
 	std::vector<sf::Texture>textures;
 	TexManager texManager;
+	std::vector<Structure>structs;
+	//sf::Text debug;
+	//sf::Font font; 
 };
 

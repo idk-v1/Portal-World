@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-World::World(int seed, int id, bool isDef, int portalLocT, int portalLocB, TileAttrib &att)
+World::World(int seed, int id, bool isDef, int portalLocT, int portalLocB, TileAttrib &att, std::vector<Structure>& structs)
 {
 	this->id = id;
 	this->seed = seed;
@@ -28,7 +28,8 @@ World::World(int seed, int id, bool isDef, int portalLocT, int portalLocB, TileA
 			break;
 		}
 	}
-	genPortal();
+	placeStruct(125, 25, 1, structs, att);
+	genPortal(structs, att);
 }
 
 int World::getWidth()
@@ -56,7 +57,8 @@ int World::getTile(int x, int y, int z)
 void World::setTile(int x, int y, int z, int id)
 {
 	if (x >= 0 && x < width && y >= 0 && y < length && z >= 0 && z < height)
-		tiles[x][y][z].setID(id);
+		if (id != 255)
+			tiles[x][y][z].setID(id);
 }
 
 int World::getID()
@@ -83,6 +85,36 @@ void World::init()
 	}
 
 	srand(time(NULL));
+}
+
+void World::placeStruct(int x, int y, int id, std::vector<Structure> &structs, TileAttrib &att)
+{
+	int hgt = 0, tmpHgt = 0;
+
+	if (id >= 0 && id < structs.size())
+	{
+		for (int xx = 0; xx < structs[id].getWidth(); xx++)
+			for (int yy = 0; yy < structs[id].getLength(); yy++)
+			{
+				for (int h = 0; h < height; h++)
+					if (att.getAttrib(getTile(x + xx, y + yy, h)).solid)
+						tmpHgt = h;
+				if (hgt < tmpHgt)
+					hgt = tmpHgt;
+			}
+
+		for (int xx = 0; xx < structs[id].getWidth(); xx++)
+			for (int yy = 0; yy < structs[id].getLength(); yy++)
+			{
+				setTile(x + xx, y + yy, hgt + 0, structs[id].getTile(xx, yy, 0));
+				setTile(x + xx, y + yy, hgt + 1, structs[id].getTile(xx, yy, 1));
+				setTile(x + xx, y + yy, hgt + 2, structs[id].getTile(xx, yy, 2));
+				if (structs[id].getTile(xx, yy, 0) != 255 || structs[id].getTile(xx, yy, 1) != 255 || structs[id].getTile(xx, yy, 2) != 255)
+					for (int h = 0; h < hgt; h++)
+						if (!att.getAttrib(getTile(x + xx, y + yy, h)).solid)
+							setTile(x + xx, y + yy, h, 6);
+			}
+	}
 }
 
 void World::decorate(TileAttrib &att)
@@ -116,26 +148,16 @@ void World::decorate(TileAttrib &att)
 		}
 }
 
-void World::genPortal()
+void World::genPortal(std::vector<Structure> &structs, TileAttrib &att)
 {
-	int hgt;
 	if (portalLocT >= width || portalLocT < 0)
 		portalLocT = std::hash<int>{}(seed) % width;
 	if (portalLocB >= width || portalLocB < 0)
 		portalLocB = std::hash<int>{}(seed + 1) % width;
 
-	hgt = 1;
-	for (int h = 0; h < height; h++)
-		if (getTile(portalLocT, 0, h) != 0)
-			hgt = h + 1;
-	setTile(portalLocT, 0, hgt, 5);
+	placeStruct(portalLocT, -2, 2, structs, att);
+	placeStruct(portalLocB, length - 3, 2, structs, att);
 	std::cout << "Portal is at: X: " << portalLocT << " Y: 0\n";
-
-	hgt = 1;
-	for (int h = 0; h < height; h++)
-		if (getTile(portalLocB, length - 1, h) != 0)
-			hgt = h + 1;
-	setTile(portalLocB, length - 1, hgt, 5);
 	std::cout << "Portal is at: X: " << portalLocB << " Y: " << length - 1 << "\n";
 }
 
@@ -182,8 +204,8 @@ void World::genDefault(TileAttrib& att)
 void World::genIslands(TileAttrib& att)
 {
 	int hgt, waterMat, groundMat, coverMat;
-
-	switch ((std::hash<int>{}(rand()) % 5))
+	
+	switch ((std::hash<int>{}(rand()) % 7))
 	{
 	case 0:
 	case 1:
@@ -193,6 +215,10 @@ void World::genIslands(TileAttrib& att)
 	case 3:
 	case 4:
 		waterMat = 1;
+		break;
+	case 5:
+	case 6:
+		waterMat = 4;
 		break;
 	}
 
@@ -209,7 +235,7 @@ void World::genIslands(TileAttrib& att)
 		break;
 	}
 
-	switch ((std::hash<int>{}(rand()) % 7))
+	switch ((std::hash<int>{}(rand()) % 9))
 	{
 	case 0:
 		groundMat = 6;
@@ -224,6 +250,11 @@ void World::genIslands(TileAttrib& att)
 	case 5:
 	case 6:
 		coverMat = 2;
+		break;
+	case 7:
+	case 8:
+		coverMat = 4;
+		groundMat = 4;
 		break;
 	}
 
@@ -263,7 +294,7 @@ void World::genHills(TileAttrib& att)
 {
 	int hgt, waterMat, groundMat, coverMat;
 
-	switch ((std::hash<int>{}(rand()) % 5))
+	switch ((std::hash<int>{}(rand()) % 7))
 	{
 	case 0:
 	case 1:
@@ -273,6 +304,10 @@ void World::genHills(TileAttrib& att)
 	case 3:
 	case 4:
 		waterMat = 1;
+		break;
+	case 5:
+	case 6:
+		waterMat = 4;
 		break;
 	}
 
@@ -289,7 +324,7 @@ void World::genHills(TileAttrib& att)
 		break;
 	}
 
-	switch ((std::hash<int>{}(rand()) % 7))
+	switch ((std::hash<int>{}(rand()) % 9))
 	{
 	case 0:
 		groundMat = 6;
@@ -304,6 +339,11 @@ void World::genHills(TileAttrib& att)
 	case 5:
 	case 6:
 		coverMat = 2;
+		break;
+	case 7:
+	case 8:
+		coverMat = 4;
+		groundMat = 4;
 		break;
 	}
 
@@ -336,7 +376,7 @@ void World::genHills(TileAttrib& att)
 
 void World::genRand(TileAttrib& att)
 {
-	int hgt, waterMat, groundMat, coverMat;
+	int hgt, waterMat;
 
 	switch ((std::hash<int>{}(rand()) % 5))
 	{

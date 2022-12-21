@@ -25,8 +25,12 @@ void Renderer::render(sf::RenderWindow& window, World& world, Player& player, in
 						rect.setTextureRect(sf::IntRect((ticks / 30) % (textures[id * 2 + 1].getSize().x / 32) * 32, 0, 32, 32));
 						rect.setTexture(&textures[id * 2.0 + 1]);
 						rect.setFillColor(sf::Color(base + lvl * hgt, base + lvl * hgt, base + lvl * hgt));
-						rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx,
-							window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125);
+						if (tileAtt.getAttrib(id).decor)
+							rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx,
+								window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125 - tileSize * 0.25);
+						else
+							rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx,
+								window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125);
 						window.draw(rect);
 					}
 					if (tileAtt.getAttrib(world.getTile(w, l, h)).transparent)
@@ -37,7 +41,12 @@ void Renderer::render(sf::RenderWindow& window, World& world, Player& player, in
 							{
 								rect.setTextureRect(sf::IntRect((((ticks / 30) % (textures[id * 2].getSize().x) / 32)) * 32, 0, 32, 4));
 								rect.setTexture(&textures[id * 2.0]);
-								rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx, window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125);
+								if (tileAtt.getAttrib(id).decor)
+									rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx,
+										window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125 - tileSize * 0.25);
+								else
+									rect.setPosition(window.getSize().x / 2.0 + double(w) * tileSize - posx,
+										window.getSize().y / 2.0 + double(l) * tileSize - posy - double(h) * tileSize * 0.125 + posz * tileSize * 0.125);
 								rect.setSize(sf::Vector2f(tileSize, tileSize * 0.125));
 								rect.setFillColor(sf::Color(base + lvl * hgt, base + lvl * hgt, base + lvl * hgt));
 								window.draw(rect);

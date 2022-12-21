@@ -3,11 +3,12 @@
 #include "SimplexNoise.hpp"
 #include "TileAttrib.h"
 #include "Tile.h"
+#include "Structure.h"
 
 class World
 {
 public:
-	World(int seed, int id, bool isDef, int portalLocT, int portalLocB, TileAttrib&);
+	World(int seed, int id, bool isDef, int portalLocT, int portalLocB, TileAttrib&, std::vector<Structure>&);
 
 	int getTile(int x, int y, int z);
 	void setTile(int x, int y, int z, int id);
@@ -15,9 +16,10 @@ public:
 	int getLength();
 	int getHeight();
 	int getID();
-	void genPortal();
+	void genPortal(std::vector<Structure>&, TileAttrib&);
 private:
 	void init();
+	void placeStruct(int, int, int, std::vector<Structure>&, TileAttrib&);
 	void decorate(TileAttrib&);
 	void genDefault(TileAttrib&);
 	void genIslands(TileAttrib&);
