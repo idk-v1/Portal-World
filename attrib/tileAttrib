@@ -32,7 +32,7 @@
     name: "grass"
     id: 2
     drop: 3
-    frict: 4
+    frict: 5
     light: 0
     invisible: 0
     transparent: 0
@@ -47,7 +47,7 @@
     name: "dirt"
     id: 3
     drop: 3
-    frict: 4
+    frict: 5
     light: 0
     invisible: 0
     transparent: 0
@@ -63,7 +63,7 @@
     name: "sand"
     id: 4
     drop: 4
-    frict: 4
+    frict: 5
     light: 0
     invisible: 0
     transparent: 0
@@ -93,7 +93,7 @@
     name: "stone"
     id: 6
     drop: 6
-    frict: 4
+    frict: 5
     light: 0
     invisible: 0
     transparent: 0
@@ -130,6 +130,21 @@
     decor: 1
     side: 1
     solid: 0
+    liquid: 0
+    replacable: 0
+    breakable: 1
+}
+{
+    name: "bricks"
+    id: 9
+    drop: 9
+    frict: 5
+    light: 0
+    invisible: 0
+    transparent: 0
+    decor: 0
+    side: 1
+    solid: 1
     liquid: 0
     replacable: 0
     breakable: 1
