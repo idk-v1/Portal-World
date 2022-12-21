@@ -3,6 +3,9 @@
 
 ##### SFML is required
 
+### 0.0.6
+Added structures: Portals and a house
+
 ### 0.0.5
 Added basic decorations to worlds and random world materials. Textures look better.
 
