@@ -1,0 +1,8 @@
+### Structures are stored in the png format.
+#### Limitations: 255 possible ids (not a problem yet) and a height limit of 3 (may be a problem).
+##### Red channel is the top layer.
+##### Green channel is the middle layer.
+##### Blue channel is the bottom layer.
+
+#### For GIMP:
+##### Colors -> Components -> Decompose/Compose
